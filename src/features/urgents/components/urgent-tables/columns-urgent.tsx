@@ -1,9 +1,9 @@
 'use client';
-import { Dispute } from '@/constants/data-dispute';
+import { Urgent } from '@/constants/data-urgent';
 import { ColumnDef } from '@tanstack/react-table';
-import { CellAction } from './cell-action-dispute';
+import { CellAction } from './cell-action-urgent';
 
-export const columns: ColumnDef<Dispute>[] = [
+export const columns: ColumnDef<Urgent>[] = [
   {
     accessorKey: 'id', // Added ID column
     header: 'ID'
@@ -15,6 +15,10 @@ export const columns: ColumnDef<Dispute>[] = [
   {
     accessorKey: 'seller_name',
     header: 'Seller Name'
+  },
+  {
+    accessorKey: 'assignee_name',
+    header: 'Assignee Name'
   },
   {
     accessorKey: 'status',

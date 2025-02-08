@@ -7,59 +7,46 @@ import { matchSorter } from 'match-sorter'; // For filtering
 export const delay = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
-// Define the shape of Dispute data
-export type Dispute = {
+// Define the shape of Urgent data
+export type Urgent = {
   id: number;
   buyer_name: string;
   seller_name: string;
+  assignee_name: string;
   status: string;
   created_at: string;
   category: string;
 };
 
-// Mock dispute data store
-export const fakeDisputes = {
-  records: [] as Dispute[], // Holds the list of dispute objects
+// Mock urgent data store
+export const fakeUrgents = {
+  records: [] as Urgent[], // Holds the list of urgent objects
 
   // Initialize with sample data
   initialize() {
     this.records = [
       {
         id: 1,
-        buyer_name: 'Angel Chan',
-        seller_name: 'Emma Lii',
-        status: 'Done',
+        buyer_name: 'Billy Joe',
+        seller_name: 'Tommy Woo',
+        assignee_name: 'Joshua Lee',
+        status: 'In Progress',
         created_at: '2024-02-08',
         category: 'Buyer not paid'
       },
       {
         id: 2,
-        buyer_name: 'Clover Mint',
-        seller_name: 'Smith Peter',
-        status: 'In Progress',
-        created_at: '2024-02-08',
-        category: 'Seller not released'
-      },
-      {
-        id: 3,
-        buyer_name: 'Queen Zhang',
-        seller_name: 'Lina Ng ',
-        status: 'In Progress',
-        created_at: '2024-02-08',
-        category: 'Buyer underpaid'
-      },
-      {
-        id: 4,
-        buyer_name: 'Lee Anne',
-        seller_name: 'Sara Pooh',
+        buyer_name: 'George Doe',
+        seller_name: 'Quincy Woo',
+        assignee_name: 'Ricky Lee',
         status: 'Done',
         created_at: '2024-02-07',
-        category: 'Buyer overpaid'
+        category: 'Seller not released'
       }
     ];
   },
 
-  // Get all disputes with optional category filtering and search
+  // Get all urgent with optional category filtering and search
   async getAll({
     categories = [],
     search
@@ -67,27 +54,27 @@ export const fakeDisputes = {
     categories?: string[];
     search?: string;
   }) {
-    let disputes = [...this.records];
+    let urgents = [...this.records];
 
-    // Filter disputes based on selected categories
+    // Filter urgents based on selected categories
     if (categories.length > 0) {
-      disputes = disputes.filter((dispute) =>
-        categories.includes(dispute.category)
+      urgents = urgents.filter((urgent) =>
+        categories.includes(urgent.category)
       );
     }
 
     // Search functionality across multiple fields
     if (search) {
-      disputes = matchSorter(disputes, search, {
+      urgents = matchSorter(urgents, search, {
         keys: ['name', 'description', 'category']
       });
     }
 
-    return disputes;
+    return urgents;
   },
 
   // Get paginated results with optional category filtering and search
-  async getDisputes({
+  async getUrgents({
     page = 1,
     limit = 10,
     categories,
@@ -100,15 +87,15 @@ export const fakeDisputes = {
   }) {
     await delay(1000);
     const categoriesArray = categories ? categories.split('.') : [];
-    const allDisputes = await this.getAll({
+    const allUrgents = await this.getAll({
       categories: categoriesArray,
       search
     });
-    const totalDisputes = allDisputes.length;
+    const totalUrgents = allUrgents.length;
 
     // Pagination logic
     const offset = (page - 1) * limit;
-    const paginatedDisputes = allDisputes.slice(offset, offset + limit);
+    const paginatedUrgents = allUrgents.slice(offset, offset + limit);
 
     // Mock current time
     const currentTime = new Date().toISOString();
@@ -118,24 +105,24 @@ export const fakeDisputes = {
       success: true,
       time: currentTime,
       message: 'Sample data for testing and learning purposes',
-      total_disputes: totalDisputes,
+      total_urgents: totalUrgents,
       offset,
       limit,
-      disputes: paginatedDisputes
+      urgents: paginatedUrgents
     };
   },
 
-  // Get a specific dispute by its ID
-  async getDisputeById(id: number) {
+  // Get a specific urgent by its ID
+  async getUrgentById(id: number) {
     await delay(1000); // Simulate a delay
 
-    // Find the dispute by its ID
-    const dispute = this.records.find((dispute) => dispute.id === id);
+    // Find the urgent by its ID
+    const urgent = this.records.find((urgent) => urgent.id === id);
 
-    if (!dispute) {
+    if (!urgent) {
       return {
         success: false,
-        message: `Dispute with ID ${id} not found`
+        message: `Urgent with ID ${id} not found`
       };
     }
 
@@ -145,11 +132,11 @@ export const fakeDisputes = {
     return {
       success: true,
       time: currentTime,
-      message: `Dispute with ID ${id} found`,
-      dispute
+      message: `Urgent with ID ${id} found`,
+      urgent
     };
   }
 };
 
-// Initialize sample disputes
-fakeDisputes.initialize();
+// Initialize sample urgents
+fakeUrgents.initialize();

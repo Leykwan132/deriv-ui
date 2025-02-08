@@ -18,12 +18,12 @@ import {
   ChartTooltipContent
 } from '@/components/ui/chart';
 const chartData = [
-  { month: 'January', desktop: 186, mobile: 80 },
-  { month: 'February', desktop: 305, mobile: 200 },
-  { month: 'March', desktop: 237, mobile: 120 },
-  { month: 'April', desktop: 73, mobile: 190 },
-  { month: 'May', desktop: 209, mobile: 130 },
-  { month: 'June', desktop: 214, mobile: 140 }
+  { month: 'Aug', desktop: 286, mobile: 10 },
+  { month: 'Sep', desktop: 305, mobile: 36 },
+  { month: 'Oct', desktop: 237, mobile: 20 },
+  { month: 'Nov', desktop: 273, mobile: 25 },
+  { month: 'Dec', desktop: 209, mobile: 39 },
+  { month: 'Jan', desktop: 214, mobile: 18 }
 ];
 
 const chartConfig = {
@@ -41,10 +41,8 @@ export function AreaGraph() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Area Chart - Stacked</CardTitle>
-        <CardDescription>
-          Showing total visitors for the last 6 months
-        </CardDescription>
+        <CardTitle>Dispute Cases vs Urgent (Escalation) Cases</CardTitle>
+        <CardDescription>for the last 6 months</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer
@@ -93,11 +91,11 @@ export function AreaGraph() {
       <CardFooter>
         <div className='flex w-full items-start gap-2 text-sm'>
           <div className='grid gap-2'>
-            <div className='flex items-center gap-2 font-medium leading-none'>
+            {/* <div className='flex items-center gap-2 font-medium leading-none'>
               Trending up by 5.2% this month <TrendingUp className='h-4 w-4' />
-            </div>
+            </div> */}
             <div className='flex items-center gap-2 leading-none text-muted-foreground'>
-              January - June 2024
+              August 2024 - January 2025
             </div>
           </div>
         </div>

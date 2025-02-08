@@ -19,11 +19,14 @@ import {
   ChartTooltipContent
 } from '@/components/ui/chart';
 const chartData = [
-  { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
-  { browser: 'firefox', visitors: 287, fill: 'var(--color-firefox)' },
-  { browser: 'edge', visitors: 173, fill: 'var(--color-edge)' },
-  { browser: 'other', visitors: 190, fill: 'var(--color-other)' }
+  { browser: 'Buyer Not Paid', visitors: 210, fill: 'var(--color-chrome)' },
+  {
+    browser: 'Seller Not Released',
+    visitors: 250,
+    fill: 'var(--color-safari)'
+  },
+  { browser: 'Buyer Underpaid', visitors: 190, fill: 'var(--color-firefox)' },
+  { browser: 'Buyer Overpaid', visitors: 135, fill: 'var(--color-edge)' }
 ];
 
 const chartConfig = {
@@ -60,8 +63,8 @@ export function PieGraph() {
   return (
     <Card className='flex flex-col'>
       <CardHeader className='items-center pb-0'>
-        <CardTitle>Pie Chart - Donut with Text</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Dispute by Category</CardTitle>
+        <CardDescription>January 2025</CardDescription>
       </CardHeader>
       <CardContent className='flex-1 pb-0'>
         <ChartContainer
@@ -117,9 +120,9 @@ export function PieGraph() {
         <div className='flex items-center gap-2 font-medium leading-none'>
           Trending up by 5.2% this month <TrendingUp className='h-4 w-4' />
         </div>
-        <div className='leading-none text-muted-foreground'>
+        {/* <div className='leading-none text-muted-foreground'>
           Showing total visitors for the last 6 months
-        </div>
+        </div> */}
       </CardFooter>
     </Card>
   );
