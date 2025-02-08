@@ -28,7 +28,7 @@ export const fakeDisputes = {
         id: 1,
         buyer_name: 'Angel Chan',
         seller_name: 'Emma Lii',
-        status: 'In Progress',
+        status: 'Done',
         created_at: '2024-02-08',
         category: 'Buyer not paid'
       },
@@ -44,8 +44,8 @@ export const fakeDisputes = {
         id: 3,
         buyer_name: 'Queen Zhang',
         seller_name: 'Lina Ng ',
-        status: 'Done',
-        created_at: '2024-02-07',
+        status: 'In Progress',
+        created_at: '2024-02-08',
         category: 'Buyer underpaid'
       },
       {

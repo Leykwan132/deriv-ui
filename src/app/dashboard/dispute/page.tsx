@@ -34,7 +34,7 @@ export default async function Page(props: pageProps) {
         <div className='flex items-start justify-between'>
           <Heading
             title='Disputes'
-            description='Manage products (Server side table functionalities.)'
+            description='All disputes are managed by Deric AI autonomously.'
           />
           {/* <Link
             href='/dashboard/product/new'

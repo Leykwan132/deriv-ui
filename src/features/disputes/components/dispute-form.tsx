@@ -1,133 +1,11 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger
-} from '@/components/ui/collapsible';
 import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
 import { Dispute } from '@/constants/mock-api-dispute';
-
-// Message sets for different dispute cases
-const conversationMessages = {
-  1: [
-    {
-      id: 1,
-      sender: 'buyer',
-      message: "Hi, I'll do the transaction soon",
-      timestamp: '2024-02-08 10:30 AM'
-    },
-    {
-      id: 2,
-      sender: 'seller',
-      message: 'Ohh... my app is running very slow. ',
-      timestamp: '2024-02-08 10:35 AM'
-    },
-    {
-      id: 3,
-      sender: 'seller',
-      message: "Let's continue on Telegram.",
-      timestamp: '2024-02-08 10:37 AM'
-    },
-    {
-      id: 4,
-      sender: 'seller',
-      message:
-        "This is my Telegram link: <a href='https://t.me/johnsmith?xabdjsdvf' class='text-blue-400 underline' target='_blank'>t.me/johnsmith?xabdjsdvf</a>",
-      timestamp: '2024-02-08 10:40 AM'
-    }
-  ],
-  2: [
-    {
-      id: 1,
-      sender: 'buyer',
-      message: 'Hello, I want to ask you something about our deal.',
-      timestamp: '2024-02-08 11:30 AM'
-    },
-    {
-      id: 2,
-      sender: 'seller',
-      message: 'Sure, please make the payment first',
-      timestamp: '2024-02-08 11:35 AM'
-    },
-    {
-      id: 3,
-      sender: 'buyer',
-      message: 'Payment done!',
-      timestamp: '2024-02-08 11:40 AM'
-    },
-    {
-      id: 4,
-      sender: 'seller',
-      message: "Let's chat on WhatsApp for faster response",
-      timestamp: '2024-02-08 11:45 AM'
-    }
-  ],
-  3: [
-    {
-      id: 1,
-      sender: 'buyer',
-      message: 'Hello, are you there...',
-      timestamp: '2024-02-08 11:30 AM'
-    },
-    {
-      id: 2,
-      sender: 'seller',
-      message: "Wait a moment, I'm checking the payment",
-      timestamp: '2024-02-08 11:35 AM'
-    },
-    {
-      id: 3,
-      sender: 'buyer',
-      message:
-        "No...I didn't make any payment. Add me on Messenger first <a href='https://t.me/johnsmith?xabdjsdvf' class='text-black underline' target='_blank'>messenger/.?1ucbakjknx</a>",
-      timestamp: '2024-02-08 11:40 AM'
-    }
-  ],
-  4: [
-    {
-      id: 1,
-      sender: 'buyer',
-      message: 'Hello.',
-      timestamp: '2024-02-08 11:30 AM'
-    },
-    {
-      id: 2,
-      sender: 'seller',
-      message: 'Hi, please join telegram group',
-      timestamp: '2024-02-08 11:35 AM'
-    },
-    {
-      id: 3,
-      sender: 'seller',
-      message:
-        "<a href='https://t.me/?xabdjsdvf' class='text-blue-400 underline' target='_blank'>https://t.me/?xabdjsdvf</a>",
-      timestamp: '2024-02-08 11:40 AM'
-    }
-  ],
-  5: [
-    {
-      id: 1,
-      sender: 'buyer',
-      message: 'Hello.',
-      timestamp: '2024-02-03 11:30 AM'
-    },
-    {
-      id: 2,
-      sender: 'seller',
-      message: 'Hi',
-      timestamp: '2024-02-03 11:35 AM'
-    },
-    {
-      id: 3,
-      sender: 'buyer',
-      message: 'contact me on WhatsApp. 019-555555555',
-      timestamp: '2024-02-03 11:40 AM'
-    }
-  ]
-};
+import React from 'react';
+import { Image } from 'antd';
+import { FileText, Video } from 'lucide-react';
 
 // Hardcoded case logs
 // Case logs for different dispute cases
@@ -136,173 +14,330 @@ const disputeCaseLogs = {
     {
       id: 1,
       action: 'Case Created',
-      user: 'Dispute Detection System',
+      user: 'Deric AI',
       details: 'Dispute case automatically created.',
       timestamp: '2024-02-08 10:45 AM',
       type: 'system'
     },
     {
       id: 2,
-      action: 'Assigned to Agent',
-      user: 'Dispute Detection System',
-      details: 'Case assigned to Support Team Lead',
-      timestamp: '2024-02-08 10:50 AM',
+      action: 'Dispute Raised by Seller',
+      user: 'Emma Lii',
+      details:
+        'Seller claims that the buyer has not yet transferred the payment.',
+      timestamp: '2024-02-08 10:45 AM',
       type: 'assignment'
+    },
+    {
+      id: 3,
+      action: 'Context Analysis',
+      user: 'Deric AI',
+      details:
+        'Deric AI analyzes the chat history between the buyer and seller.',
+      timestamp: '2024-02-08 10:46 AM',
+      type: 'assignment'
+    },
+    {
+      id: 4,
+      action: 'Request for Proof',
+      user: 'Deric AI',
+      details:
+        'Deric AI requests the buyer to provide proof of the transaction. A timeout is set for response.',
+      timestamp: '2024-02-08 10:46 AM',
+      type: 'assignment'
+    },
+    {
+      id: 5,
+      action: 'Buyer Submitted Proof',
+      user: 'Angel Chan',
+      details: 'Buyer provides transaction proof.',
+      timestamp: '2024-02-08 10:52 AM',
+      type: 'assignment'
+    },
+    {
+      id: 6,
+      action: 'Proof Verification',
+      user: 'Deric AI',
+      details: 'Deric AI analyzes the provided proof.',
+      timestamp: '2024-02-08 10:53 AM',
+      type: 'assignment'
+    },
+    {
+      id: 7,
+      action: 'Proof is Not Valid',
+      user: 'Deric AI',
+      details:
+        'Deric AI detects inconsistencies and rejects the buyer’s appeal, providing reasons. Funds are released to the seller.',
+      timestamp: '2024-02-08 10:54 AM',
+      type: 'system'
+    },
+    {
+      id: 8,
+      action: 'Case Closed',
+      user: 'Deric AI',
+      details: 'Dispute case automatically closed.',
+      timestamp: '2024-02-08 10:54 AM',
+      type: 'system'
     }
   ],
   2: [
     {
       id: 1,
       action: 'Case Created',
-      user: 'Dispute Detection System',
-      details: 'Potential dispute detected - External platform redirection',
-      timestamp: '2024-02-09 11:50 AM',
+      user: 'Deric AI',
+      details: 'Dispute case automatically created.',
+      timestamp: '2024-02-08 10:44 AM',
       type: 'system'
     },
     {
       id: 2,
-      action: 'Assigned to Agent',
-      user: 'Dispute Detection System',
-      details: 'Case assigned to Dispute Investigation Team',
-      timestamp: '2024-02-09 11:55 AM',
+      action: 'Dispute Raised by Buyer',
+      user: 'Clover Mint',
+      details: 'Buyer claims that the seller has not yet released the amount.',
+      timestamp: '2024-02-08 10:44 AM',
       type: 'assignment'
     },
     {
       id: 3,
-      action: 'Note Added',
-      user: 'Dispute Detection System',
-      details: 'Seller attempting to move conversation to WhatsApp',
-      timestamp: '2024-02-09 12:00 PM',
-      type: 'note'
+      action: 'Context Analysis',
+      user: 'Deric AI',
+      details:
+        'Deric AI analyzes the chat history between the buyer and seller.',
+      timestamp: '2024-02-08 10:44 AM',
+      type: 'assignment'
+    },
+    {
+      id: 4,
+      action: 'Request for Proof',
+      user: 'Deric AI',
+      details:
+        'Deric AI requests the buyer to provide proof of the transaction. A timeout is set for response.',
+      timestamp: '2024-02-08 10:44 AM',
+      type: 'assignment'
+    },
+    {
+      id: 5,
+      action: 'Waiting Buyer to Submit Proof',
+      user: 'Clover',
+      details: 'Pending proof submission from the buyer.',
+      timestamp: '2024-02-08 10:45 AM',
+      type: 'assignment'
     }
   ],
   3: [
     {
       id: 1,
       action: 'Case Created',
-      user: 'Dispute Detection System',
-      details: 'Potential fraud detected - External platform redirection',
-      timestamp: '2024-02-03 11:50 AM',
+      user: 'Deric AI',
+      details: 'Dispute case automatically created.',
+      timestamp: '2024-02-08 10:43 AM',
       type: 'system'
     },
     {
       id: 2,
-      action: 'Assigned to Agent',
-      user: 'Fraud Detection System',
-      details: 'Case assigned to Fraud Investigation Team',
-      timestamp: '2024-02-03 11:55 AM',
+      action: 'Dispute Raised by Seller',
+      user: 'Lina Ng',
+      details: 'Seller claims that the buyer underpaid.',
+      timestamp: '2024-02-08 10:43 AM',
       type: 'assignment'
     },
     {
       id: 3,
-      action: 'Status Updated',
-      user: 'Fraud Detection System',
-      details: 'Case escalated to high priority',
-      timestamp: '2024-02-03 12:05 PM',
-      type: 'status'
+      action: 'Context Analysis',
+      user: 'Deric AI',
+      details:
+        'Deric AI analyzes the chat history between the buyer and seller.',
+      timestamp: '2024-02-08 10:43 AM',
+      type: 'assignment'
     },
     {
       id: 4,
-      action: 'Account Temporarily Locked',
-      user: 'Fraud Detection System',
-      details: 'Account access restricted due to security concerns.',
-      timestamp: '2024-02-03 12:15 PM',
-      type: 'security'
+      action: 'Request for Proof',
+      user: 'Deric AI',
+      details:
+        'Deric AI requests the seller to provide proof of the receipt. A timeout is set for response.',
+      timestamp: '2024-02-08 10:43 AM',
+      type: 'assignment'
     },
     {
       id: 5,
-      action: 'Status Updated',
-      user: 'Lisa BP',
-      details: 'Case closed as resolved.',
-      timestamp: '2024-02-03 12:35 PM',
-      type: 'status'
+      action: 'Waiting Seller to Submit Proof',
+      user: 'Lina Ng',
+      details: 'Pending proof submission from the seller.',
+      timestamp: '2024-02-08 10:44 AM',
+      type: 'assignment'
     }
   ],
   4: [
     {
       id: 1,
       action: 'Case Created',
-      user: 'Fraud Detection System',
-      details: 'Potential fraud detected - External platform redirection',
-      timestamp: '2024-02-02 11:50 AM',
+      user: 'Deric AI',
+      details: 'Dispute case automatically created.',
+      timestamp: '2024-02-07 10:45 AM',
       type: 'system'
     },
     {
       id: 2,
-      action: 'Assigned to Agent',
-      user: 'Fraud Detection System',
-      details: 'Case assigned to Fraud Investigation Team',
-      timestamp: '2024-02-02 11:55 AM',
+      action: 'Dispute Raised by Buyer',
+      user: 'Lee Anne',
+      details: 'Buyer claims they overpaid and requests a refund.',
+      timestamp: '2024-02-07 10:45 AM',
       type: 'assignment'
     },
     {
       id: 3,
-      action: 'Note Added',
-      user: 'Fraud Detection System',
-      details: 'Seller attempting to move conversation to Telegram',
-      timestamp: '2024-02-02 12:00 PM',
-      type: 'note'
+      action: 'Context Analysis',
+      user: 'Deric AI',
+      details:
+        'Deric AI analyzes the chat history between the buyer and seller.',
+      timestamp: '2024-02-07 10:45 AM',
+      type: 'assignment'
     },
     {
       id: 4,
-      action: 'Account Temporarily Locked',
-      user: 'Fraud Detection System',
-      details: 'Account access restricted due to security concerns.',
-      timestamp: '2024-02-03 12:15 PM',
-      type: 'security'
+      action: 'Request for Proof',
+      user: 'Deric AI',
+      details:
+        'Deric AI requests the buyer to provide proof of the transaction. A timeout is set for response.',
+      timestamp: '2024-02-07 10:46 AM',
+      type: 'assignment'
     },
     {
       id: 5,
-      action: 'Status Updated',
-      user: 'Rosie Anne',
-      details: 'Case closed as resolved.',
-      timestamp: '2024-02-03 12:35 PM',
-      type: 'status'
-    }
-  ],
-  5: [
+      action: 'Buyer Submitted Proof',
+      user: 'Angel Chan',
+      details: 'Buyer provides transaction proof.',
+      timestamp: '2024-02-07 10:55 AM',
+      type: 'assignment'
+    },
     {
-      id: 1,
-      action: 'Case Created',
-      user: 'Fraud Detection System',
-      details: 'Potential fraud detected - External platform redirection',
-      timestamp: '2024-02-08 11:50 AM',
+      id: 6,
+      action: 'Proof Verification',
+      user: 'Deric AI',
+      details: 'Deric AI analyzes the provided proof.',
+      timestamp: '2024-02-07 10:55 AM',
+      type: 'assignment'
+    },
+    {
+      id: 7,
+      action: 'Overpayment is Verified',
+      user: 'Deric AI',
+      details:
+        'Deric AI prompts the seller to confirm if they received the overpaid amount. Timeout is set for response.',
+      timestamp: '2024-02-07 10:54 AM',
       type: 'system'
     },
     {
-      id: 2,
-      action: 'Assigned to Agent',
-      user: 'Fraud Detection System',
-      details: 'Case assigned to Fraud Investigation Team',
-      timestamp: '2024-02-08 11:55 AM',
-      type: 'assignment'
+      id: 8,
+      action: 'Seller Acknowledges Overpayment',
+      user: 'Deric AI',
+      details: 'Seller processed a refund.',
+      timestamp: '2024-02-07 11:08 AM',
+      type: 'system'
     },
     {
-      id: 3,
-      action: 'Account Temporarily Locked',
-      user: 'Fraud Detection System',
-      details: 'Account access restricted due to security concerns.',
-      timestamp: '2024-02-03 11:55 AM',
-      type: 'security'
-    },
-    {
-      id: 4,
-      action: 'Note Added',
-      user: 'Fraud Detection System',
-      details: 'Seller attempting to move conversation to WhatsApp',
-      timestamp: '2024-02-08 12:00 PM',
-      type: 'note'
-    },
-    {
-      id: 5,
-      action: 'Status Updated',
-      user: 'Rachel Green',
-      details: 'Case closed as resolved.',
-      timestamp: '2024-02-03 12:35 PM',
-      type: 'status'
+      id: 9,
+      action: 'Case Closed',
+      user: 'Deric AI',
+      details: 'Dispute case automatically closed.',
+      timestamp: '2024-02-07 11:08 AM',
+      type: 'system'
     }
   ]
 };
+
+const disputeSummaries = {
+  1: 'This dispute involves a seller claiming that the buyer has not transferred the payment. Deric AI automatically created the dispute case and analyzed the chat history. It then requested the buyer to provide proof of payment, which the buyer submitted. However, after analyzing the proof, Deric AI detected inconsistencies, deemed the proof invalid, and ruled in favor of the seller, releasing the funds to them. The case was then closed.',
+  2: "This dispute involves a buyer claiming that the seller has not yet released the payment amount. Deric AI automatically created the case and analyzed the chat history. It then requested the buyer to submit proof of the transaction, setting a timeout for the response. The case is currently pending as the system awaits the buyer's proof submission.",
+  3: "This dispute involves a seller claiming that the buyer underpaid. Deric AI automatically created the case and analyzed the chat history. It then requested the seller to submit proof of the receipt, setting a timeout for the response. The case is currently pending as the system awaits the seller's proof submission.",
+  4: 'This dispute involves a buyer claiming they overpaid and requesting a refund. Deric AI analyzed the chat history and requested proof from the buyer, which was later submitted and verified. The system then prompted the seller to confirm receipt of the overpaid amount. The seller acknowledged the overpayment and processed a refund, leading to the automatic closure of the case.'
+};
+
+const mockProofs = {
+  seller: [
+    {
+      id: 1,
+      type: 'image',
+      name: 'Transaction.jpg',
+      url: 'https://assets.aseannow.com/forum/uploads/monthly_2022_10/wise_receipt_p2.jpg.ddb745e9c798904b2138abf530f1a7d0.jpg'
+    },
+    { id: 2, type: 'pdf', name: 'Transaction_Receipt.pdf', url: '#' },
+    { id: 3, type: 'video', name: 'Video_Proof.mp4', url: '#' }
+  ],
+  buyer: [
+    {
+      id: 1,
+      type: 'image',
+      name: 'Transaction.jpg',
+      url: 'https://assets.aseannow.com/forum/uploads/monthly_2022_10/wise_receipt_p2.jpg.ddb745e9c798904b2138abf530f1a7d0.jpg'
+    },
+    { id: 2, type: 'pdf', name: 'Receipt.pdf', url: '#' },
+    { id: 3, type: 'video', name: 'Video_Proof.mp4', url: '#' }
+  ]
+};
+
+const FileIcon = ({ type }: { type: string }) => {
+  switch (type) {
+    case 'video':
+      return <Video className='h-8 w-8 text-gray-400' />;
+    case 'pdf':
+      return <FileText className='h-8 w-8 text-gray-400' />;
+    default:
+      return <FileText className='h-8 w-8 text-gray-400' />;
+  }
+};
+
+const ProofCard = ({ title, proofs }: { title: string; proofs: any[] }) => (
+  <Card className='border-gray-800 bg-gray-900'>
+    <CardHeader className='border-b border-gray-800'>
+      <CardTitle className='text-xl font-bold text-white'>
+        <div className='flex items-center space-x-2'>
+          <span>📎</span>
+          <span>{title}</span>
+        </div>
+      </CardTitle>
+    </CardHeader>
+    <CardContent className='p-4'>
+      <div className='grid grid-cols-2 gap-4'>
+        {proofs.map((proof) => (
+          <div
+            key={proof.id}
+            className='group relative rounded-lg border border-gray-800 p-4 transition-colors hover:border-gray-700'
+          >
+            {proof.type === 'image' ? (
+              <div className='relative mb-2 aspect-video w-full overflow-hidden rounded-lg'>
+                <Image
+                  src={proof.url}
+                  alt={proof.name}
+                  className='object-cover'
+                  preview={{
+                    maskClassName: 'backdrop-blur-sm',
+                    mask: (
+                      <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white'>
+                        Click to view
+                      </div>
+                    )
+                  }}
+                />
+              </div>
+            ) : (
+              <div className='mb-2 flex aspect-video items-center justify-center rounded-lg'>
+                <FileIcon type={proof.type} />
+              </div>
+            )}
+            <div className='space-y-1'>
+              <p className='truncate text-sm font-medium text-white'>
+                {proof.name}
+              </p>
+              <p className='text-xs uppercase text-gray-400'>{proof.type}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </CardContent>
+  </Card>
+);
 
 export default function DisputeForm({
   initialData,
@@ -311,8 +346,6 @@ export default function DisputeForm({
   initialData: Dispute | null;
   pageTitle: string;
 }) {
-  const [isOpen, setIsOpen] = useState(true); // Add this here
-
   if (!initialData) {
     return (
       <div className='flex min-h-[400px] items-center justify-center'>
@@ -321,20 +354,18 @@ export default function DisputeForm({
     );
   }
 
-  // Get the appropriate messages and case logs based on the dispute ID
-  const messages =
-    conversationMessages[initialData.id as keyof typeof conversationMessages] ||
-    [];
+  // Get the appropriate case logs and summary based on the dispute ID
   const caseLogs =
     disputeCaseLogs[initialData.id as keyof typeof disputeCaseLogs] || [];
+  const summary =
+    disputeSummaries[initialData.id as keyof typeof disputeSummaries] ||
+    'No summary available for this dispute case.';
 
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'Actions Needed':
-        return 'text-red-500';
-      case 'Reviewing':
-        return 'text-yellow-400';
-      case 'Solved':
+  const getStatusColor = (status: string) => {
+    switch (status?.toLowerCase()) {
+      case 'in progress':
+        return 'text-yellow-500';
+      case 'done':
         return 'text-green-500';
       default:
         return 'text-white';
@@ -361,11 +392,7 @@ export default function DisputeForm({
               </div>
               <div className='rounded-lg bg-gray-800 p-4'>
                 <p className='mb-1 text-sm text-gray-400'>Category</p>
-                <p
-                  className={`text-lg font-medium ${getCategoryColor(initialData.category)}`}
-                >
-                  {initialData.category}
-                </p>
+                <p className={`text-lg font-medium`}>{initialData.category}</p>
               </div>
               <div className='rounded-lg bg-gray-800 p-4'>
                 <p className='mb-1 text-sm text-gray-400'>Created At</p>
@@ -408,7 +435,9 @@ export default function DisputeForm({
                     👨‍💼
                   </span>
                 </div>
-                <p className='text-lg font-medium text-white'>
+                <p
+                  className={`text-lg font-medium ${getStatusColor(initialData.status)}`}
+                >
                   {initialData.status || 'N/A'}
                 </p>
               </div>
@@ -479,79 +508,33 @@ export default function DisputeForm({
         </CardContent>
       </Card>
 
-      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <Card className='border-gray-800 bg-gray-900'>
-          <CollapsibleTrigger className='w-full'>
-            <CardHeader className='border-b border-gray-800 transition-colors hover:bg-gray-800/50'>
-              <div className='flex items-center justify-between'>
-                <CardTitle className='text-xl font-bold text-white'>
-                  <div className='flex items-center space-x-2'>
-                    <span>💬</span>
-                    <span>Conversation History</span>
-                  </div>
-                </CardTitle>
-                {isOpen ? (
-                  <ChevronUp className='h-5 w-5 text-gray-400' />
-                ) : (
-                  <ChevronDown className='h-5 w-5 text-gray-400' />
-                )}
-              </div>
-            </CardHeader>
-          </CollapsibleTrigger>
+      <div className='grid grid-cols-2 gap-4'>
+        <ProofCard title='Seller Proof' proofs={mockProofs.seller} />
+        <ProofCard title='Buyer Proof' proofs={mockProofs.buyer} />
+      </div>
 
-          <CollapsibleContent>
-            <CardContent className='p-0'>
-              <div className='min-h-[300px] space-y-3 bg-gray-950 p-4'>
-                {messages.length > 0 ? (
-                  messages.map((msg, index) => {
-                    const isLastMessage = index === messages.length - 1;
-                    const isConsecutive =
-                      index > 0 && messages[index - 1].sender === msg.sender;
-
-                    return (
-                      <div
-                        key={msg.id}
-                        className={`flex ${msg.sender === 'buyer' ? 'justify-end' : 'justify-start'} ${isConsecutive ? 'mt-1' : 'mt-3'}`}
-                      >
-                        <div
-                          className={`relative max-w-[85%] rounded-2xl px-4 py-2 ${
-                            msg.sender === 'buyer'
-                              ? 'rounded-br-none bg-blue-600 text-white'
-                              : 'rounded-bl-none bg-gray-800 text-white'
-                          }`}
-                        >
-                          {!isConsecutive && (
-                            <div className='mb-1 text-xs font-medium opacity-80'>
-                              {msg.sender === 'buyer' ? (
-                                'Buyer'
-                              ) : (
-                                <span className='text-yellow-400'>Seller</span>
-                              )}
-                            </div>
-                          )}
-                          <p
-                            className='break-words text-sm leading-relaxed'
-                            dangerouslySetInnerHTML={{ __html: msg.message }}
-                          ></p>
-                          <div className='mt-1 select-none text-right text-[10px] text-gray-300 opacity-75'>
-                            {msg.timestamp}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <div className='flex h-[300px] items-center justify-center'>
-                    <p className='text-gray-400'>
-                      No conversation history available.
-                    </p>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </CollapsibleContent>
-        </Card>
-      </Collapsible>
+      <Card className='border-gray-800 bg-gray-900'>
+        <CardHeader className='border-b border-gray-800'>
+          <CardTitle className='text-xl font-bold text-white'>
+            <div className='flex items-center space-x-2'>
+              <span>📝</span>
+              <span>Deric AI Summary</span>
+            </div>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className='p-4'>
+          <div className='space-y-4'>
+            <div>
+              <p className='mb-6 text-sm text-gray-400'>
+                Summary of this Dispute Case
+              </p>
+              <p className='text-m text-justify font-medium text-white'>
+                {summary}
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
