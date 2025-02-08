@@ -1,7 +1,6 @@
 import { NavItem } from 'types';
 
 export type Product = {
-  photo_url: string;
   name: string;
   description: string;
   created_at: string;

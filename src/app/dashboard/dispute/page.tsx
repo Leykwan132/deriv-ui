@@ -9,11 +9,11 @@ import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { SearchParams } from 'nuqs/server';
 import { Suspense } from 'react';
-import ProductListingPage from '@/features/products/components/product-listing';
-import ProductTableAction from '@/features/products/components/product-tables/product-table-action';
+import DisputeListingPage from '@/features/disputes/components/dispute-listing';
+import DisputeTableAction from '@/features/disputes/components/dispute-tables/dispute-table-action';
 
 export const metadata = {
-  title: 'Dashboard: Products'
+  title: 'Dashboard: Disputes'
 };
 
 type pageProps = {
@@ -33,23 +33,23 @@ export default async function Page(props: pageProps) {
       <div className='flex flex-1 flex-col space-y-4'>
         <div className='flex items-start justify-between'>
           <Heading
-            title='Products'
+            title='Disputes'
             description='Manage products (Server side table functionalities.)'
           />
-          <Link
+          {/* <Link
             href='/dashboard/product/new'
             className={cn(buttonVariants(), 'text-xs md:text-sm')}
           >
             <Plus className='mr-2 h-4 w-4' /> Add New
-          </Link>
+          </Link> */}
         </div>
         <Separator />
-        <ProductTableAction />
+        <DisputeTableAction />
         <Suspense
           key={key}
           fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}
         >
-          <ProductListingPage />
+          <DisputeListingPage />
         </Suspense>
       </div>
     </PageContainer>

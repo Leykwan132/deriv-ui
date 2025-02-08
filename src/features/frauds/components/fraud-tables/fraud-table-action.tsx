@@ -5,8 +5,8 @@ import { DataTableResetFilter } from '@/components/ui/table/data-table-reset-fil
 import { DataTableSearch } from '@/components/ui/table/data-table-search';
 import {
   CATEGORY_OPTIONS,
-  useProductTableFilters
-} from './use-product-table-filters';
+  useFraudTableFilters
+} from './use-fraud-table-filters';
 
 export default function FraudTableAction() {
   const {
@@ -17,7 +17,7 @@ export default function FraudTableAction() {
     searchQuery,
     setPage,
     setSearchQuery
-  } = useProductTableFilters();
+  } = useFraudTableFilters();
   return (
     <div className='flex flex-wrap items-center gap-4'>
       <DataTableSearch
