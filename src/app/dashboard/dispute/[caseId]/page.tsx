@@ -7,7 +7,7 @@ export const metadata = {
   title: 'Dashboard : Product View'
 };
 
-type PageProps = { params: Promise<{ productId: string }> };
+type PageProps = { params: Promise<{ caseId: string }> };
 
 export default async function Page(props: PageProps) {
   const params = await props.params;
@@ -15,7 +15,7 @@ export default async function Page(props: PageProps) {
     <PageContainer scrollable>
       <div className='flex-1 space-y-4'>
         <Suspense fallback={<FormCardSkeleton />}>
-          <ProductViewPage productId={params.productId} />
+          <ProductViewPage productId={params.caseId} />
         </Suspense>
       </div>
     </PageContainer>
