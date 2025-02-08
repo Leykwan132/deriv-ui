@@ -2,27 +2,28 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useState } from 'react';
-import { Dispute } from '@/constants/mock-api-dispute';
+import { Urgent } from '@/constants/mock-api-urgent';
 import React from 'react';
 import { Image } from 'antd';
 import { FileText, Video } from 'lucide-react';
 
 // Hardcoded case logs
-// Case logs for different dispute cases
-const disputeCaseLogs = {
+// Case logs for different urgent cases
+const urgentCaseLogs = {
   1: [
     {
       id: 1,
       action: 'Case Created',
       user: 'Deric AI',
-      details: 'Dispute case automatically created.',
+      details:
+        'Dispute case automatically created. A timeout is set for response.',
       timestamp: '2024-02-08 10:45 AM',
       type: 'system'
     },
     {
       id: 2,
       action: 'Dispute Raised by Seller',
-      user: 'Emma Lii',
+      user: 'Tommy Woo',
       details:
         'Seller claims that the buyer has not yet transferred the payment.',
       timestamp: '2024-02-08 10:45 AM',
@@ -34,49 +35,82 @@ const disputeCaseLogs = {
       user: 'Deric AI',
       details:
         'Deric AI analyzes the chat history between the buyer and seller.',
-      timestamp: '2024-02-08 10:46 AM',
+      timestamp: '2024-02-08 10:45 AM',
       type: 'assignment'
     },
     {
       id: 4,
-      action: 'Request for Proof',
+      action: 'Request for Proof from Buyer',
       user: 'Deric AI',
       details:
-        'Deric AI requests the buyer to provide proof of the transaction. A timeout is set for response.',
+        'Deric AI requests the buyer to provide proof of the transaction.',
       timestamp: '2024-02-08 10:46 AM',
       type: 'assignment'
     },
     {
       id: 5,
       action: 'Buyer Submitted Proof',
-      user: 'Angel Chan',
+      user: 'Billy Joe',
       details: 'Buyer provides transaction proof.',
-      timestamp: '2024-02-08 10:52 AM',
+      timestamp: '2024-02-08 10:55 AM',
       type: 'assignment'
     },
     {
       id: 6,
       action: 'Proof Verification',
       user: 'Deric AI',
-      details: 'Deric AI analyzes the provided proof.',
-      timestamp: '2024-02-08 10:53 AM',
+      details: 'Deric AI analyzes the provided proof from buyer.',
+      timestamp: '2024-02-08 10:55 AM',
       type: 'assignment'
     },
     {
       id: 7,
-      action: 'Proof is Not Valid',
+      action: 'Buyer Proof is Valid, Request for Proof from Seller',
       user: 'Deric AI',
       details:
-        'Deric AI detects inconsistencies and rejects the buyer’s appeal, providing reasons. Funds are released to the seller.',
-      timestamp: '2024-02-08 10:54 AM',
+        'Deric AI requests the seller to provide Proof of Not Receiving Transaction.',
+      timestamp: '2024-02-08 10:56 AM',
       type: 'system'
     },
     {
       id: 8,
-      action: 'Case Closed',
+      action: 'Seller Submitted Proof',
+      user: 'Tommy Woo',
+      details: 'Seller provides proof that no transaction was received.',
+      timestamp: '2024-02-08 11:08 AM',
+      type: 'assignment'
+    },
+    {
+      id: 9,
+      action: 'Proof Verification',
       user: 'Deric AI',
-      details: 'Dispute case automatically closed.',
-      timestamp: '2024-02-08 10:54 AM',
+      details: 'Deric AI analyzes the provided proof from seller.',
+      timestamp: '2024-02-08 11:08 AM',
+      type: 'assignment'
+    },
+    {
+      id: 10,
+      action: 'Seller Proof is Valid.',
+      user: 'Deric AI',
+      details: 'Proof is valid.',
+      timestamp: '2024-02-08 11:09 AM',
+      type: 'system'
+    },
+    {
+      id: 11,
+      action: 'Escalation',
+      user: 'Deric AI',
+      details:
+        'Deric AI escalates dispute case due to verified conflicting evidence.',
+      timestamp: '2024-02-08 11:09 AM',
+      type: 'system'
+    },
+    {
+      id: 12,
+      action: 'Assigned to Agent',
+      user: 'Deric AI',
+      details: 'Case assigned to Agent.',
+      timestamp: '2024-02-08 11:10 AM',
       type: 'system'
     }
   ],
@@ -85,103 +119,17 @@ const disputeCaseLogs = {
       id: 1,
       action: 'Case Created',
       user: 'Deric AI',
-      details: 'Dispute case automatically created.',
-      timestamp: '2024-02-08 10:44 AM',
-      type: 'system'
-    },
-    {
-      id: 2,
-      action: 'Dispute Raised by Buyer',
-      user: 'Clover Mint',
-      details: 'Buyer claims that the seller has not yet released the amount.',
-      timestamp: '2024-02-08 10:44 AM',
-      type: 'assignment'
-    },
-    {
-      id: 3,
-      action: 'Context Analysis',
-      user: 'Deric AI',
       details:
-        'Deric AI analyzes the chat history between the buyer and seller.',
-      timestamp: '2024-02-08 10:44 AM',
-      type: 'assignment'
-    },
-    {
-      id: 4,
-      action: 'Request for Proof',
-      user: 'Deric AI',
-      details:
-        'Deric AI requests the buyer to provide proof of the transaction. A timeout is set for response.',
-      timestamp: '2024-02-08 10:44 AM',
-      type: 'assignment'
-    },
-    {
-      id: 5,
-      action: 'Waiting Buyer to Submit Proof',
-      user: 'Clover',
-      details: 'Pending proof submission from the buyer.',
-      timestamp: '2024-02-08 10:45 AM',
-      type: 'assignment'
-    }
-  ],
-  3: [
-    {
-      id: 1,
-      action: 'Case Created',
-      user: 'Deric AI',
-      details: 'Dispute case automatically created.',
-      timestamp: '2024-02-08 10:43 AM',
-      type: 'system'
-    },
-    {
-      id: 2,
-      action: 'Dispute Raised by Seller',
-      user: 'Lina Ng',
-      details: 'Seller claims that the buyer underpaid.',
-      timestamp: '2024-02-08 10:43 AM',
-      type: 'assignment'
-    },
-    {
-      id: 3,
-      action: 'Context Analysis',
-      user: 'Deric AI',
-      details:
-        'Deric AI analyzes the chat history between the buyer and seller.',
-      timestamp: '2024-02-08 10:43 AM',
-      type: 'assignment'
-    },
-    {
-      id: 4,
-      action: 'Request for Proof',
-      user: 'Deric AI',
-      details:
-        'Deric AI requests the seller to provide proof of the receipt. A timeout is set for response.',
-      timestamp: '2024-02-08 10:43 AM',
-      type: 'assignment'
-    },
-    {
-      id: 5,
-      action: 'Waiting Seller to Submit Proof',
-      user: 'Lina Ng',
-      details: 'Pending proof submission from the seller.',
-      timestamp: '2024-02-08 10:44 AM',
-      type: 'assignment'
-    }
-  ],
-  4: [
-    {
-      id: 1,
-      action: 'Case Created',
-      user: 'Deric AI',
-      details: 'Dispute case automatically created.',
+        'Dispute case automatically created. A timeout is set for response.',
       timestamp: '2024-02-07 10:45 AM',
       type: 'system'
     },
     {
       id: 2,
       action: 'Dispute Raised by Buyer',
-      user: 'Lee Anne',
-      details: 'Buyer claims they overpaid and requests a refund.',
+      user: 'George Doe',
+      details:
+        'Buyer claims that the seller has not yet transferred the payment.',
       timestamp: '2024-02-07 10:45 AM',
       type: 'assignment'
     },
@@ -196,17 +144,17 @@ const disputeCaseLogs = {
     },
     {
       id: 4,
-      action: 'Request for Proof',
+      action: 'Request for Proof from Buyer',
       user: 'Deric AI',
       details:
-        'Deric AI requests the buyer to provide proof of the transaction. A timeout is set for response.',
+        'Deric AI requests the buyer to provide proof of the transaction.',
       timestamp: '2024-02-07 10:46 AM',
       type: 'assignment'
     },
     {
       id: 5,
       action: 'Buyer Submitted Proof',
-      user: 'Angel Chan',
+      user: 'Billy Joe',
       details: 'Buyer provides transaction proof.',
       timestamp: '2024-02-07 10:55 AM',
       type: 'assignment'
@@ -215,43 +163,74 @@ const disputeCaseLogs = {
       id: 6,
       action: 'Proof Verification',
       user: 'Deric AI',
-      details: 'Deric AI analyzes the provided proof.',
+      details: 'Deric AI analyzes the provided proof from buyer.',
       timestamp: '2024-02-07 10:55 AM',
       type: 'assignment'
     },
     {
       id: 7,
-      action: 'Overpayment is Verified',
+      action: 'Buyer Proof is Valid, Request for Proof from Seller',
       user: 'Deric AI',
       details:
-        'Deric AI prompts the seller to confirm if they received the overpaid amount. Timeout is set for response.',
-      timestamp: '2024-02-07 10:54 AM',
+        'Deric AI requests the seller to provide Proof of Not Receiving Transaction.',
+      timestamp: '2024-02-07 10:56 AM',
       type: 'system'
     },
     {
       id: 8,
-      action: 'Seller Acknowledges Overpayment',
-      user: 'Deric AI',
-      details: 'Seller processed a refund.',
+      action: 'Seller Submitted Proof',
+      user: 'Quincy Woo',
+      details: 'Seller provides proof that no transaction was received.',
       timestamp: '2024-02-07 11:08 AM',
-      type: 'system'
+      type: 'assignment'
     },
     {
       id: 9,
-      action: 'Case Closed',
+      action: 'Proof Verification',
       user: 'Deric AI',
-      details: 'Dispute case automatically closed.',
+      details: 'Deric AI analyzes the provided proof from seller.',
       timestamp: '2024-02-07 11:08 AM',
+      type: 'assignment'
+    },
+    {
+      id: 10,
+      action: 'Seller Proof is Valid.',
+      user: 'Deric AI',
+      details: 'Proof is valid.',
+      timestamp: '2024-02-07 11:09 AM',
+      type: 'system'
+    },
+    {
+      id: 11,
+      action: 'Escalation',
+      user: 'Deric AI',
+      details:
+        'Deric AI escalates dispute case due to verified conflicting evidence.',
+      timestamp: '2024-02-08 11:09 AM',
+      type: 'system'
+    },
+    {
+      id: 12,
+      action: 'Assigned to Agent',
+      user: 'Deric AI',
+      details: 'Case assigned to Agent.',
+      timestamp: '2024-02-08 11:10 AM',
+      type: 'system'
+    },
+    {
+      id: 13,
+      action: 'Agent Settled Dispute',
+      user: 'Ricky Lee',
+      details: 'Case closed.',
+      timestamp: '2024-02-08 11:29 AM',
       type: 'system'
     }
   ]
 };
 
-const disputeSummaries = {
-  1: 'This dispute involves a seller claiming that the buyer has not transferred the payment. Deric AI automatically created the dispute case and analyzed the chat history. It then requested the buyer to provide proof of payment, which the buyer submitted. However, after analyzing the proof, Deric AI detected inconsistencies, deemed the proof invalid, and ruled in favor of the seller, releasing the funds to them. The case was then closed.',
-  2: "This dispute involves a buyer claiming that the seller has not yet released the payment amount. Deric AI automatically created the case and analyzed the chat history. It then requested the buyer to submit proof of the transaction, setting a timeout for the response. The case is currently pending as the system awaits the buyer's proof submission.",
-  3: "This dispute involves a seller claiming that the buyer underpaid. Deric AI automatically created the case and analyzed the chat history. It then requested the seller to submit proof of the receipt, setting a timeout for the response. The case is currently pending as the system awaits the seller's proof submission.",
-  4: 'This dispute involves a buyer claiming they overpaid and requesting a refund. Deric AI analyzed the chat history and requested proof from the buyer, which was later submitted and verified. The system then prompted the seller to confirm receipt of the overpaid amount. The seller acknowledged the overpayment and processed a refund, leading to the automatic closure of the case.'
+const urgentSummaries = {
+  1: 'A dispute case was created where the seller claimed the buyer had not transferred the payment. Deric AI analyzed the chat history and requested proof from both parties. The buyer provided transaction proof, which was verified as valid, while the seller submitted proof showing no transaction was received, which was also verified as valid. Due to the conflicting evidence, the case was escalated and assigned to a human agent for further review.',
+  2: 'A dispute case was created where the buyer claimed the seller had not released the amount. Deric AI analyzed the chat history and requested proof from both parties. The buyer provided transaction proof, which was verified as valid, while the seller submitted proof showing no transaction was received, which was also verified as valid. Due to the conflicting evidence, the case was escalated and assigned to a human agent. The agent reviewed the case and settled the dispute, closing it.'
 };
 
 const mockProofs = {
@@ -339,27 +318,27 @@ const ProofCard = ({ title, proofs }: { title: string; proofs: any[] }) => (
   </Card>
 );
 
-export default function DisputeForm({
+export default function UrgentForm({
   initialData,
   pageTitle
 }: {
-  initialData: Dispute | null;
+  initialData: Urgent | null;
   pageTitle: string;
 }) {
   if (!initialData) {
     return (
       <div className='flex min-h-[400px] items-center justify-center'>
-        <p className='text-gray-400'>No dispute details found.</p>
+        <p className='text-gray-400'>No urgent details found.</p>
       </div>
     );
   }
 
-  // Get the appropriate case logs and summary based on the dispute ID
+  // Get the appropriate case logs and summary based on the urgent ID
   const caseLogs =
-    disputeCaseLogs[initialData.id as keyof typeof disputeCaseLogs] || [];
+    urgentCaseLogs[initialData.id as keyof typeof urgentCaseLogs] || [];
   const summary =
-    disputeSummaries[initialData.id as keyof typeof disputeSummaries] ||
-    'No summary available for this dispute case.';
+    urgentSummaries[initialData.id as keyof typeof urgentSummaries] ||
+    'No summary available for this urgent case.';
 
   const getStatusColor = (status: string) => {
     switch (status?.toLowerCase()) {
@@ -383,9 +362,9 @@ export default function DisputeForm({
         <CardContent>
           <div className='space-y-6'>
             {/* Case Information */}
-            <div className='grid grid-cols-3 gap-4'>
+            <div className='grid grid-cols-4 gap-4'>
               <div className='rounded-lg bg-gray-800 p-4'>
-                <p className='mb-1 text-sm text-gray-400'>Dispute ID</p>
+                <p className='mb-1 text-sm text-gray-400'>Urgent ID</p>
                 <p className='text-lg font-medium text-white'>
                   {initialData.id}
                 </p>
@@ -398,6 +377,12 @@ export default function DisputeForm({
                 <p className='mb-1 text-sm text-gray-400'>Created At</p>
                 <p className='text-lg font-medium text-white'>
                   {initialData.created_at}
+                </p>
+              </div>
+              <div className='rounded-lg bg-gray-800 p-4'>
+                <p className='mb-1 text-sm text-gray-400'>Assignee</p>
+                <p className='text-lg font-medium text-white'>
+                  {initialData.assignee_name || 'Unassigned'}
                 </p>
               </div>
             </div>
@@ -459,7 +444,7 @@ export default function DisputeForm({
           <div className='space-y-4'>
             <div>
               <p className='mb-6 text-sm text-gray-400'>
-                Summary of this Dispute Case
+                Summary of this Urgent Case
               </p>
               <p className='text-m text-justify font-medium text-white'>
                 {summary}

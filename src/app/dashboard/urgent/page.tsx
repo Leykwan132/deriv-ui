@@ -9,11 +9,11 @@ import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { SearchParams } from 'nuqs/server';
 import { Suspense } from 'react';
-import ProductListingPage from '@/features/products/components/product-listing';
-import ProductTableAction from '@/features/products/components/product-tables/product-table-action';
+import UrgentListingPage from '@/features/urgents/components/urgent-listing';
+import UrgentTableAction from '@/features/urgents/components/urgent-tables/urgent-table-action';
 
 export const metadata = {
-  title: 'Dashboard: Products'
+  title: 'Dashboard: Urgent Cases'
 };
 
 type pageProps = {
@@ -34,16 +34,16 @@ export default async function Page(props: pageProps) {
         <div className='flex items-start justify-between'>
           <Heading
             title='Urgent Cases'
-            description='Cases below are escalation from '
+            description='Cases below are escalation from Deric AI'
           />
         </div>
         <Separator />
-        <ProductTableAction />
+        <UrgentTableAction />
         <Suspense
           key={key}
           fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}
         >
-          <ProductListingPage />
+          <UrgentListingPage />
         </Suspense>
       </div>
     </PageContainer>

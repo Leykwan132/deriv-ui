@@ -25,7 +25,7 @@ export default function OverViewLayout({
           <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
               <CardTitle className='text-sm font-medium'>
-                Total Revenue
+                Total Urgent (Escalation) Cases
               </CardTitle>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -41,16 +41,16 @@ export default function OverViewLayout({
               </svg>
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>$45,231.89</div>
+              <div className='text-2xl font-bold'>30</div>
               <p className='text-xs text-muted-foreground'>
-                +20.1% from last month
+                -70.8% from last month
               </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
               <CardTitle className='text-sm font-medium'>
-                Subscriptions
+                Total Dispute Cases
               </CardTitle>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -68,15 +68,17 @@ export default function OverViewLayout({
               </svg>
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>+2350</div>
+              <div className='text-2xl font-bold'>+1350</div>
               <p className='text-xs text-muted-foreground'>
-                +180.1% from last month
+                +88.1% from last month
               </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-              <CardTitle className='text-sm font-medium'>Sales</CardTitle>
+              <CardTitle className='text-sm font-medium'>
+                Total Detected Fraud Cases
+              </CardTitle>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 viewBox='0 0 24 24'
@@ -92,9 +94,9 @@ export default function OverViewLayout({
               </svg>
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>+12,234</div>
+              <div className='text-2xl font-bold'>+138</div>
               <p className='text-xs text-muted-foreground'>
-                +19% from last month
+                +6% from last month
               </p>
             </CardContent>
           </Card>
@@ -115,9 +117,9 @@ export default function OverViewLayout({
               </svg>
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>+573</div>
+              <div className='text-2xl font-bold'>+209</div>
               <p className='text-xs text-muted-foreground'>
-                +201 since last hour
+                +38 since last hour
               </p>
             </CardContent>
           </Card>
